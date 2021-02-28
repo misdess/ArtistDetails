@@ -1,14 +1,14 @@
 #Description
 
 A [Spring Boot](https://spring.io/projects/spring-boot) REST API for providing clients with information about a specific music
-artist, collected from 3 different sources: MusicBrainz, Cover ArtArchive and one source of your choice given from the MusicBrainz response.
+artist, collected from 3 different sources: MusicBrainz, Cover ArtArchive and Discogs.
 
 #Installation and Running
 
 
 * From within project root run: *mvn spring-boot:run*. This starts the application at port 8080.
 
-* From browser, connect to the application *http://localhost:8080/artist?id=\<mbid>*  where \<mbid> is [MusicBrainsz Identifier](https://musicbrainz.org/doc/MusicBrainz_Identifier).
+* From browser, connect to the application *http://localhost:8080/artist?id=<mbid>*  where \<mbid> is [MusicBrainsz Identifier](https://musicbrainz.org/doc/MusicBrainz_Identifier).
 
 #Response
 
