@@ -22,7 +22,6 @@ public class RestTemplateErrorHandler implements ResponseErrorHandler {
     @Override
     public void handleError(ClientHttpResponse httpResponse) throws IOException {
         logger.info("Got error: {}, Message: {}", httpResponse.getStatusCode().series(), httpResponse.getStatusText());
-
     }
 
 

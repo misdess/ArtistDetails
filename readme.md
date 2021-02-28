@@ -12,11 +12,11 @@ artist, collected from 3 different sources: MusicBrainz, Cover ArtArchive and Di
 
 #Response
 
-* The application validates the request (only length of *mbid* for now), and returns *INVALID* for <mbid> length lower or greater than 36.
+* The application validates the request (only length of \<mbid> for now), and returns \<INVALID> for <mbid> length lower or greater than 36.
 * For valid *mbid* the application sends requests to external API's and 
- returns a successful json message containing the artist details if an artist with the identifier exists or <NOT_FOUND> otherwise.
+ returns a successful json message containing the artist details if an artist with the identifier exists or \<NOT_FOUND> otherwise.
  
-#Sample working *mbid*
+#Sample working \<mbid>
 
 * 5b11f4ce-a62d-471e-81fc-a69a8278c7da
 * f27ec8db-af05-4f36-916e-3d57f91ecf5e
@@ -26,7 +26,7 @@ artist, collected from 3 different sources: MusicBrainz, Cover ArtArchive and Di
 
 * The application is built by using [Spring Boot](https://spring.io/projects/spring-boot) and runs with [Jetty server](https://www.eclipse.org/jetty/)
 * It uses [RestTemplate](https://docs.spring.io/spring-android/docs/current/reference/html/rest-template.html) to request external libraries.
-* As the external libraries are very slow, the application keeps its own local caches of *artist*, *covert art* and *description* while it is running. 
+* As the external libraries are very slow, the application keeps its own local caches of *artist*, *covert art* and *discogs* while it is running. 
 For any request, it checks if an artist identified by \<mbid> exists in the cache otherwise sends a requests to external API's. 
                                                                                         
 

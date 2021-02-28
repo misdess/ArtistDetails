@@ -17,15 +17,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.concurrent.ExecutionException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class ArtistControllerTest {
+public class ArtistDetailsApplicationTest {
 
     final private static String WRONG_ID = "5b11f4ce-a62d-471e-81fc-a69a8278c7dt38";
     final private static String CORRECT_ID = "5b11f4ce-a62d-471e-81fc-a69a8278c7da";
@@ -180,7 +178,7 @@ public class ArtistControllerTest {
             "  \"data_quality\": \"Needs Vote\"\n" +
             "}";
 
-    ArtistController artistController;
+    ArtistDetailsApplication artistDetailsApplication;
     @Mock
     protected RequestValidator validator;
     @Mock
@@ -195,16 +193,16 @@ public class ArtistControllerTest {
     @BeforeEach
     public void setUp(){
         ArtistService service = new ArtistService(restTemplate);
-        artistController = new ArtistController(service, validator);
+        artistDetailsApplication = new ArtistDetailsApplication(service, validator);
 
     }
 
     @Test
-    void testArtistDetailsNotRetrievedWhenInvalidMbid() throws JsonProcessingException, JSONException, ExecutionException, InterruptedException {
+    void testArtistDetailsNotRetrievedWhenInvalidMbid() throws JsonProcessingException, JSONException {
 
         when(validator.validateMdIdLength(anyString())).thenReturn(false);
 
-        String json = artistController.artist(WRONG_ID);
+        String json = artistDetailsApplication.artist(WRONG_ID);
 
         JSONObject object = new JSONObject(json);
         assertEquals(INVALID_REQUEST, object.getString("message"));
@@ -212,13 +210,13 @@ public class ArtistControllerTest {
     }
 
     @Test
-    void testArtistNotFound() throws JsonProcessingException, JSONException, ExecutionException, InterruptedException {
+    void testArtistNotFound() throws JsonProcessingException, JSONException {
 
         when(validator.validateMdIdLength(anyString())).thenReturn(true);
         when(restTemplate.getForEntity(anyString(), eq(String.class))).thenReturn(artistResponse);
         when(artistResponse.getStatusCode()).thenReturn(HttpStatus.NOT_FOUND);
 
-        String response = artistController.artist(WRONG_ID);
+        String response = artistDetailsApplication.artist(WRONG_ID);
         JSONObject profile = new JSONObject(response);
 
         assertEquals(MessageCodes.NOT_FOUND.name(), profile.getString("code"));
@@ -227,7 +225,7 @@ public class ArtistControllerTest {
 
 
     @Test
-    void testArtistDetailsRetrievedWhenValidMbid() throws JsonProcessingException, JSONException, ExecutionException, InterruptedException {
+    void testArtistDetailsRetrievedWhenValidMbid() throws JsonProcessingException, JSONException {
 
         when(validator.validateMdIdLength(anyString())).thenReturn(true);
         doAnswer(new Answer() {
@@ -254,7 +252,7 @@ public class ArtistControllerTest {
         doReturn(DESCRIPTION).when(descriptionResponse).getBody();
         doReturn(HttpStatus.OK).when(descriptionResponse).getStatusCode();
 
-        String response = artistController.artist(CORRECT_ID);
+        String response = artistDetailsApplication.artist(CORRECT_ID);
         JSONObject profile = new JSONObject(response);
 
         assertEquals(1, profile.getJSONArray("albums").length());

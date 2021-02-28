@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.*;
 @SpringBootApplication
 @RestController
 @RequestMapping("/artist")
-public class ArtistController {
+public class ArtistDetailsApplication {
 
    protected ArtistService service;
    protected RequestValidator validator;
 
-    public ArtistController(ArtistService service, RequestValidator validator) {
+    public ArtistDetailsApplication(ArtistService service, RequestValidator validator) {
         this.service = service;
         this.validator = validator;
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(ArtistController.class, args);
+        SpringApplication.run(ArtistDetailsApplication.class, args);
     }
 
     @RequestMapping(
